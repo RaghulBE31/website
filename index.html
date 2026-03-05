@@ -1,58 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+<meta charset="UTF-8">
 <title>Happy Birthday Mom ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
 
 body{
     margin:0;
+    height:100vh;
     font-family:Arial;
-    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
     text-align:center;
     color:white;
 }
 
-.container{
-    margin-top:100px;
+/* cake */
+
+.cake{
+    font-size:120px;
 }
 
-h1{
-    font-size:60px;
-    animation: glow 2s infinite alternate;
+/* candles */
+
+.candles{
+    font-size:40px;
+    margin-bottom:10px;
+    animation:flicker 1s infinite alternate;
 }
 
-@keyframes glow{
-    from{
-        text-shadow:0 0 10px #fff;
-    }
-    to{
-        text-shadow:0 0 30px #ff4081;
-    }
+@keyframes flicker{
+    from{opacity:1}
+    to{opacity:0.6}
 }
 
-img{
-    width:220px;
-    border-radius:50%;
-    border:5px solid white;
-    margin-top:20px;
-}
-
-p{
-    font-size:22px;
-    width:70%;
-    margin:auto;
-    margin-top:20px;
-}
+/* button */
 
 button{
-    padding:15px 25px;
-    font-size:18px;
+    margin-top:20px;
+    padding:15px 30px;
+    font-size:20px;
     border:none;
+    border-radius:10px;
     background:#ff4081;
     color:white;
-    border-radius:10px;
-    margin-top:30px;
     cursor:pointer;
 }
 
@@ -60,29 +58,61 @@ button:hover{
     background:#e91e63;
 }
 
+/* hidden message */
+
+#birthdayContent{
+    display:none;
+    margin-top:40px;
+}
+
+#birthdayContent img{
+    width:220px;
+    border-radius:50%;
+    border:5px solid white;
+    margin-top:20px;
+}
+
+h1{
+    font-size:50px;
+    margin-top:20px;
+}
+
+p{
+    font-size:22px;
+    width:70%;
+    margin:auto;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div id="cakeArea">
 
-<h1>🎉 Happy Birthday Mom 🎂</h1>
+<div class="candles" id="candles">🕯️ 🕯️ 🕯️</div>
+
+<div class="cake">🎂</div>
+
+<button onclick="blowCandles()">Blow the Candles 💨</button>
+
+</div>
+
+<div id="birthdayContent">
+
+<h1>🎉 Happy Birthday Mom 🎉</h1>
 
 <img src="mom.jpg">
 
 <p>
-Dear Mom ❤️  
-Thank you for always loving me, supporting me, and believing in me.  
-You are the best mother in the world.  
-I am so lucky to have you in my life.  
-
-Today is your special day, and I wish you happiness, health, and many more beautiful years ahead.
+Dear Mom ❤️ <br><br>
+Thank you for always loving me and supporting me.
+You are the most important person in my life.
+I wish you happiness, health and many more
+beautiful years ahead.
 
 Love you always 💖
 </p>
-
-<button onclick="playMusic()">Play Birthday Song 🎵</button>
 
 </div>
 
@@ -92,11 +122,24 @@ Love you always 💖
 
 <script>
 
-function playMusic(){
-    document.getElementById("song").play();
+function blowCandles(){
+
+document.getElementById("candles").style.display="none";
+
+document.getElementById("birthdayContent").style.display="block";
+
+document.getElementById("song").play();
+
+confetti({
+particleCount:200,
+spread:100,
+origin:{y:0.6}
+});
+
 }
 
 </script>
 
 </body>
+
 </html>
