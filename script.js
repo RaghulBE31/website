@@ -1,6 +1,17 @@
-const btn = document.getElementById("blowBtn")
+const startBtn = document.getElementById("startBtn")
+const cakeScreen = document.getElementById("cakeScreen")
+const intro = document.getElementById("intro")
 
-btn.onclick = () => {
+startBtn.onclick = () => {
+
+intro.style.display = "none"
+cakeScreen.style.display = "flex"
+
+}
+
+const blowBtn = document.getElementById("blowBtn")
+
+blowBtn.onclick = () => {
 
 document.querySelectorAll(".flame").forEach(f=>{
 f.style.display="none"
@@ -11,8 +22,8 @@ particleCount:300,
 spread:120
 })
 
-document.getElementById("song").play()
+document.getElementById("popup").style.display="flex"
 
-document.getElementById("birthdayContent").style.display="block"
+document.getElementById("song").play()
 
 }
