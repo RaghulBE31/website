@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const startBtn = document.getElementById("startBtn")
 const blowBtn = document.getElementById("blowBtn")
 
@@ -36,6 +38,8 @@ document.getElementById("song").play()
 document.getElementById("popup").style.display="flex"
 
 }
+
+})
 
 function createBalloons(){
 
