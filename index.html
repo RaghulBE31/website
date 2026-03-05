@@ -1,82 +1,234 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday Mom ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mom ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-pink: #ff4081;
+            --gradient: linear-gradient(45deg, #ff4081, #ff80ab);
+            --glass: rgba(255, 255, 255, 0.15);
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        /* Animated Stars Background */
+        #stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse { from { opacity: 0.2; } to { opacity: 0.5; } }
+
+        /* Generic Screen Wrapper */
+        .screen {
+            position: absolute;
+            text-align: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .hidden { opacity: 0; transform: scale(0.8) translateY(30px); pointer-events: none; }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; margin-bottom: 10px; color: #fff; }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: var(--gradient);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+            transition: 0.3s;
+        }
+
+        button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 64, 129, 0.5); }
+
+        /* --- MODERN CAKE DESIGN --- */
+        .cake-box { height: 250px; display: flex; align-items: flex-end; position: relative; }
+        
+        .cake { width: 180px; position: relative; }
+        .layer { width: 100%; height: 45px; border-radius: 10px 10px 4px 4px; position: absolute; left: 0; }
+        .l-1 { bottom: 0; background: #5d4037; height: 60px; } /* Chocolate */
+        .l-2 { bottom: 45px; background: #f06292; } /* Strawberry */
+        .l-3 { bottom: 80px; background: #fff9c4; } /* Vanilla */
+        
+        .icing-drip { 
+            position: absolute; bottom: 110px; width: 100%; height: 15px; 
+            background: white; border-radius: 20px; z-index: 2;
+        }
+
+        .candles-row { position: absolute; bottom: 125px; width: 100%; display: flex; justify-content: center; gap: 15px; }
+        .candle { width: 8px; height: 35px; background: #e1f5fe; border-radius: 2px; position: relative; }
+        .flame {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 18px; background: orange; border-radius: 50%;
+            box-shadow: 0 0 15px yellow; animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker { from { opacity: 0.8; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(1.2); } }
+
+        /* --- FINAL POPUP --- */
+        .mom-img {
+            width: 200px; height: 200px; object-fit: cover;
+            border-radius: 50%; border: 6px solid #fff;
+            margin: 20px 0; box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+
+        .balloon { position: fixed; bottom: -100px; font-size: 2rem; animation: floatUp 6s linear forwards; }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(20deg); } }
+    </style>
 </head>
-
 <body>
 
-<div id="stars"></div>
+    <div id="stars"></div>
 
-<!-- INTRO SCREEN -->
+    <div id="screen-1" class="screen">
+        <div class="glass-card">
+            <h1>Special Delivery ❤️</h1>
+            <p>I made something for you, Mom.</p>
+            <button onclick="showCake()">Open My Heart 🎁</button>
+        </div>
+    </div>
 
-<div id="intro">
-<h1>A Surprise For Mom ❤️</h1>
-<button id="startBtn">Start the Celebration 🎁</button>
-</div>
+    <div id="screen-2" class="screen hidden">
+        <div class="cake-box">
+            <div class="cake">
+                <div class="layer l-1"></div>
+                <div class="layer l-2"></div>
+                <div class="layer l-3"></div>
+                <div class="icing-drip"></div>
+                <div class="candles-row">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+            </div>
+        </div>
+        <button onclick="blowCandles()">Make a Wish & Blow 💨</button>
+    </div>
 
-<!-- CAKE SCREEN -->
+    <div id="screen-3" class="screen hidden">
+        <div class="glass-card">
+            <h1>Happy Birthday!</h1>
+            <img src="mom.jpg" class="mom-img" alt="Mom" onerror="this.src='https://via.placeholder.com/200?text=I+Love+You'">
+            <p style="line-height: 1.6;">To the world's most amazing mom: You are the heart of our home and the light of my life. I love you! ❤️</p>
+            <button onclick="location.reload()">See it Again ✨</button>
+        </div>
+    </div>
 
-<div id="cakeScreen">
+    <audio id="bdaySong">
+        <source src="birthday.mp3" type="audio/mpeg">
+    </audio>
 
-<div class="cake">
+    <script>
+        const song = document.getElementById('bdaySong');
 
-<div class="plate"></div>
+        function showCake() {
+            document.getElementById('screen-1').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('screen-1').style.display = 'none';
+                document.getElementById('screen-2').classList.remove('hidden');
+            }, 800);
+            startBalloons();
+        }
 
-<div class="layer layer-bottom"></div>
-<div class="layer layer-middle"></div>
-<div class="layer layer-top"></div>
+        function blowCandles() {
+            // Extinguish flames
+            document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+            
+            // Play sound
+            song.play().catch(() => console.log("Sound ready after interaction"));
 
-<div class="icing"></div>
+            // Confetti Blast
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4081', '#ffffff', '#ffd54f']
+            });
 
-<div class="candles">
+            // Transition to Final Screen
+            setTimeout(() => {
+                document.getElementById('screen-2').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('screen-2').style.display = 'none';
+                    document.getElementById('screen-3').classList.remove('hidden');
+                    celebrateInfinite();
+                }, 800);
+            }, 1500);
+        }
 
-<div class="candle"><div class="flame"></div></div>
-<div class="candle"><div class="flame"></div></div>
-<div class="candle"><div class="flame"></div></div>
+        function startBalloons() {
+            const emojis = ['🎈', '🌸', '✨', '💖'];
+            setInterval(() => {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                b.style.left = Math.random() * 100 + 'vw';
+                b.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                document.body.appendChild(b);
+                setTimeout(() => b.remove(), 7000);
+            }, 600);
+        }
 
-</div>
+        function celebrateInfinite() {
+            const duration = 15 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-</div>
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
 
-<br>
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
 
-<button id="blowBtn">Blow the Candles 💨</button>
-
-</div>
-
-<!-- POPUP -->
-
-<div id="popup">
-
-<div class="card">
-
-<h1>🎉 Happy Birthday Mom 🎉</h1>
-
-<img src="mom.jpg">
-
-<p>
-You are the most wonderful mother in the world ❤️  
-Thank you for everything you have done for me.
-</p>
-
-</div>
-
-</div>
-
-<audio id="song">
-<source src="birthday.mp3">
-</audio>
-
-<script src="script.js" defer></script>
-
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
 </body>
 </html>
