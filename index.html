@@ -3,252 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Mom ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <title>Happy Birthday Ma ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --cake-color: #fce4ec;
-            --frosting: #ffffff;
-            --side-color: #f8bbd0;
-        }
-
         body {
             margin: 0;
-            height: 100vh;
-            background: #0a0a0a;
+            background-color: #000;
             color: white;
-            font-family: 'Playfair Display', serif;
-            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
         }
 
-        /* High-End Background */
-        .ambient-light {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #2c1a1a 0%, #000 70%);
-            z-index: -1;
+        /* Initial Screen */
+        #intro {
+            z-index: 10;
         }
 
-        .container { text-align: center; z-index: 10; }
-
-        /* --- REALISTIC 3D SQUARE CAKE --- */
-        .stage {
-            perspective: 1200px;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
+        /* Cake Screen Styling */
+        #cakeScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease;
         }
 
+        /* REALISTIC CHOCOLATE CAKE DESIGN */
         .cake {
             position: relative;
             width: 200px;
-            height: 150px;
-            transform-style: preserve-3d;
-            transform: rotateX(-20deg) rotateY(25deg);
-            transition: transform 1s ease;
-        }
-
-        .layer {
-            position: absolute;
-            width: 200px;
             height: 120px;
-            transform-style: preserve-3d;
+            background: #3d1e1e; /* Chocolate Brown */
+            border-radius: 100px / 40px;
+            box-shadow: 0 10px 0 #2b1515, 0 15px 20px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
         }
 
-        .face {
+        .cake::before {
+            content: "";
             position: absolute;
+            top: -20px;
+            left: 0;
             width: 200px;
-            height: 120px;
-            background: var(--side-color);
-            border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            height: 80px;
+            background: #f5f5f5; /* Creamy White Icing */
+            border-radius: 100px / 40px;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
+            z-index: 2;
         }
 
-        .front  { transform: rotateY(0deg) translateZ(100px); }
-        .back   { transform: rotateY(180deg) translateZ(100px); }
-        .left   { transform: rotateY(-90deg) translateZ(100px); }
-        .right  { transform: rotateY(90deg) translateZ(100px); }
-        .top    { 
-            width: 200px; height: 200px; 
-            background: var(--cake-color);
-            transform: rotateX(90deg) translateZ(100px);
-            box-shadow: inset 0 0 40px rgba(255,255,255,0.8);
-        }
-
-        /* Realistic Frosting Drips */
+        /* Icing Drips */
         .drip {
-            position: absolute; width: 20px; height: 40px;
-            background: var(--frosting);
+            position: absolute;
+            top: 25px;
+            width: 25px;
+            height: 45px;
+            background: #f5f5f5;
             border-radius: 0 0 20px 20px;
-            top: 0;
+            z-index: 1;
         }
 
-        /* --- CANDLES & FLAME --- */
-        .candle-group {
-            position: absolute; width: 100%; height: 100%;
-            transform: rotateX(-90deg) translateZ(110px);
-        }
-
+        /* Candle */
         .candle {
-            position: absolute; width: 10px; height: 50px;
-            background: linear-gradient(to bottom, #fff, #ffd1dc);
-            bottom: 0; left: 50%;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 50px;
+            background: #ff4081;
+            border-radius: 4px;
+            z-index: 3;
         }
 
         .flame {
-            position: absolute; top: -25px; left: 50%;
+            position: absolute;
+            top: -20px;
+            left: 50%;
             transform: translateX(-50%);
-            width: 15px; height: 25px;
+            width: 15px;
+            height: 25px;
             background: radial-gradient(circle at bottom, #fff, #ffa500, #ff4500);
             border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 20px 5px rgba(255,165,0,0.5);
-            animation: flicker 0.15s infinite alternate;
+            box-shadow: 0 0 15px #ffa500;
+            animation: flicker 0.1s infinite alternate;
         }
 
         @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1) rotate(-1deg); }
-            100% { transform: translateX(-50%) scale(1.1) rotate(1deg); }
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.2); }
         }
 
-        /* Smoke Particles */
+        /* Smoke Effect */
         .smoke {
-            position: absolute; top: -30px; left: 50%;
-            width: 8px; height: 8px; background: rgba(200,200,200,0.6);
-            border-radius: 50%; filter: blur(5px);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: rgba(200, 200, 200, 0.7);
+            border-radius: 50%;
+            filter: blur(5px);
             opacity: 0;
         }
 
-        .blow-animation { animation: smokeRise 2s forwards; }
+        .smoke-active { animation: smokeRise 2s forwards; }
 
         @keyframes smokeRise {
-            0% { opacity: 0.8; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(4); }
+            0% { opacity: 0.7; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(3); }
         }
 
-        /* --- SQUARE PHOTO FRAME --- */
-        .photo-reveal {
-            display: none; opacity: 0; transform: scale(0.8);
-            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Square Photo (Polaroid Style) */
+        #finalScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .polaroid {
-            background: white; padding: 15px 15px 60px 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            display: inline-block; transform: rotate(-3deg);
+            background: white;
+            padding: 15px 15px 50px 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transform: rotate(-2deg);
         }
 
         .polaroid img {
-            width: 250px; height: 250px; object-fit: cover;
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
             border: 1px solid #eee;
         }
 
-        .caption {
-            font-family: 'Dancing Script', cursive; color: #333;
-            font-size: 2rem; margin-top: 20px;
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-top: 30px;
+            color: #ff4081;
         }
 
-        /* Interaction Elements */
-        .btn {
-            margin-top: 50px; padding: 15px 40px; font-size: 1.2rem;
-            background: #e91e63; color: white; border: none;
-            border-radius: 4px; cursor: pointer; transition: 0.3s;
+        /* Buttons */
+        button {
+            padding: 15px 35px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            background: #ff4081;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
         }
 
-        .btn:hover { background: #c2185b; transform: scale(1.05); }
+        button:hover { transform: scale(1.1); }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="ambient-light"></div>
+    <div id="intro">
+        <button onclick="startCelebration()">Start the Celebration 🎁</button>
+    </div>
 
-<div class="container">
-    <h1 id="headline">Happy Birthday, Mom</h1>
-
-    <div class="stage" id="cakeStage">
+    <div id="cakeScreen">
         <div class="cake">
-            <div class="layer">
-                <div class="face front"></div>
-                <div class="face back"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-                <div class="top">
-                    <div class="drip" style="left: 10px;"></div>
-                    <div class="drip" style="left: 50px;"></div>
-                    <div class="drip" style="left: 140px;"></div>
-                    <div class="drip" style="left: 180px;"></div>
-                    
-                    <div class="candle-group">
-                        <div class="candle" style="left: 50%; transform: translateX(-50%);">
-                            <div class="flame" id="flame"></div>
-                            <div id="smoke" class="smoke"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="drip" style="left: 20px;"></div>
+            <div class="drip" style="left: 70px; height: 60px;"></div>
+            <div class="drip" style="left: 130px;"></div>
+            <div class="drip" style="left: 165px; height: 50px;"></div>
+            <div class="candle">
+                <div id="flame" class="flame"></div>
+                <div id="smoke" class="smoke"></div>
             </div>
         </div>
+        <button id="blowBtn" onclick="blowCandle()">Blow the Candle 💨</button>
     </div>
 
-    <div class="photo-reveal" id="photoReveal">
+    <div id="finalScreen">
         <div class="polaroid">
-            <img src="mom.jpg" alt="Mom" onerror="this.src='https://via.placeholder.com/250x250?text=Mom'">
-            <div class="caption">I Love You ❤️</div>
+            <img src="mom.jpg" alt="Mom and Dad">
         </div>
+        <h1>Happy Birthday Ma ❤️</h1>
     </div>
 
-    <br>
-    <button class="btn" id="actionBtn" onclick="handleAction()">Blow the Candle 💨</button>
-</div>
+    <audio id="bdaySong" src="birthday.mp3"></audio>
 
-<audio id="music" src="birthday.mp3"></audio>
-
-<script>
-    let state = 'CAKE';
-
-    function handleAction() {
-        const flame = document.getElementById('flame');
-        const smoke = document.getElementById('smoke');
-        const btn = document.getElementById('actionBtn');
-        const cakeStage = document.getElementById('cakeStage');
-        const photo = document.getElementById('photoReveal');
-        const headline = document.getElementById('headline');
-        const music = document.getElementById('music');
-
-        if (state === 'CAKE') {
-            // 1. Blow out flame (Real smoke effect)
-            flame.style.display = 'none';
-            smoke.classList.add('blow-animation');
-            
-            btn.innerText = "Open Your Present 🎁";
-            headline.innerText = "Make a Wish...";
-            state = 'READY';
-        } 
-        else if (state === 'READY') {
-            // 2. Hide cake, show Square Photo
-            cakeStage.style.transition = "0.8s";
-            cakeStage.style.transform = "scale(0) rotateY(180deg)";
-            cakeStage.style.opacity = "0";
-
-            setTimeout(() => {
-                cakeStage.style.display = 'none';
-                photo.style.display = 'block';
-                setTimeout(() => {
-                    photo.style.opacity = '1';
-                    photo.style.transform = 'scale(1) rotate(0deg)';
-                }, 100);
-                
-                headline.innerText = "You Are My Everything";
-                headline.style.fontFamily = "'Dancing Script', cursive";
-                btn.style.display = 'none';
-                music.play();
-            }, 800);
+    <script>
+        function startCelebration() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('cakeScreen').style.display = 'flex';
         }
-    }
-</script>
 
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const smoke = document.getElementById('smoke');
+            const song = document.getElementById('bdaySong');
+
+            // 1. Blow out flame with smoke
+            flame.style.display = 'none';
+            smoke.classList.add('smoke-active');
+            
+            // 2. Play music and throw confetti
+            song.play();
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // 3. Reveal Photo and "Happy Birthday Ma"
+            setTimeout(() => {
+                document.getElementById('cakeScreen').style.display = 'none';
+                document.getElementById('finalScreen').style.display = 'flex';
+                
+                // Keep the celebration going
+                var end = Date.now() + (5 * 1000);
+                (function frame() {
+                    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
