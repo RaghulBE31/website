@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<title>Happy Birthday Mom ❤️</title>
+<title>Birthday Surprise</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -12,9 +13,19 @@
 
 <body>
 
-<div class="container">
+<!-- INTRO SCREEN -->
 
-<h1 class="title">A Special Surprise For Mom ❤️</h1>
+<div id="intro">
+
+<h1>A Surprise For Mom ❤️</h1>
+
+<button id="startBtn">Start the Surprise 🎁</button>
+
+</div>
+
+<!-- CAKE SCREEN -->
+
+<div id="cakeScreen">
 
 <div class="cake">
 
@@ -34,22 +45,32 @@
 
 </div>
 
-<div class="cake-body"></div>
+<div class="layer layer1"></div>
+<div class="layer layer2"></div>
+<div class="layer layer3"></div>
 
 </div>
 
 <button id="blowBtn">Blow the Candles 💨</button>
 
-<div id="birthdayContent">
+</div>
+
+<!-- POPUP -->
+
+<div id="popup">
+
+<div class="card">
 
 <h1>🎉 Happy Birthday Mom 🎉</h1>
 
 <img src="mom.jpg">
 
 <p>
-Thank you for always loving me and supporting me.
 You are the best mother in the world ❤️
+Thank you for everything.
 </p>
+
+</div>
 
 </div>
 
@@ -57,9 +78,7 @@ You are the best mother in the world ❤️
 <source src="birthday.mp3">
 </audio>
 
-</div>
-
-<script src="script.js"></script>
+<script src="script.js" defer></script>
 
 </body>
 </html>
