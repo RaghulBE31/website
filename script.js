@@ -1,29 +1,60 @@
 const startBtn = document.getElementById("startBtn")
-const cakeScreen = document.getElementById("cakeScreen")
+const blowBtn = document.getElementById("blowBtn")
+
 const intro = document.getElementById("intro")
+const cakeScreen = document.getElementById("cakeScreen")
 
 startBtn.onclick = () => {
 
-intro.style.display = "none"
-cakeScreen.style.display = "flex"
+intro.style.display="none"
+cakeScreen.style.display="flex"
+
+createBalloons()
 
 }
-
-const blowBtn = document.getElementById("blowBtn")
 
 blowBtn.onclick = () => {
 
 document.querySelectorAll(".flame").forEach(f=>{
+
 f.style.display="none"
+
+const s=document.createElement("div")
+s.className="smoke"
+f.parentElement.appendChild(s)
+
 })
 
 confetti({
-particleCount:300,
-spread:120
+particleCount:400,
+spread:160,
+origin:{y:0.6}
 })
+
+document.getElementById("song").play()
 
 document.getElementById("popup").style.display="flex"
 
-document.getElementById("song").play()
+}
+
+function createBalloons(){
+
+const balloons=["🎈","🎉","✨","🎊"]
+
+for(let i=0;i<15;i++){
+
+let b=document.createElement("div")
+
+b.className="balloon"
+
+b.innerHTML=balloons[Math.floor(Math.random()*balloons.length)]
+
+b.style.left=Math.random()*100+"vw"
+
+b.style.animationDuration=(6+Math.random()*5)+"s"
+
+document.body.appendChild(b)
+
+}
 
 }
